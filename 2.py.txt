@@ -1,0 +1,19 @@
+class Solution:
+    # Function to search a given number X in a row-column sorted matrix.
+    def search(self, mat, n, m, x):
+        # Start at the top-right corner
+        row = 0
+        col = m - 1
+        
+        # Traverse the matrix until we go out of bounds
+        while row < n and col >= 0:
+            current = mat[row][col]
+            
+            if current == x:
+                return 1  # Element found
+            elif current > x:
+                col -= 1  # Move left to smaller values
+            else:
+                row += 1  # Move down to larger values
+                
+        return 0  # Element not found
