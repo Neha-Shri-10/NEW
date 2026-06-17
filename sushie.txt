@@ -1,0 +1,17 @@
+n=int(input())
+m=int(input())
+a=list(map(int,input().split()))
+b=list(map(int,input().split()))
+a.sort()
+b.sort()
+i=0
+j=0
+count=0
+while i<n and j<m:
+    if b[j]<=2*a[i]:
+        i=i+1
+        j=j+1
+        count=count+1
+    else:
+        i=i+1
+print(count)
