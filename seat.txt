@@ -1,0 +1,57 @@
+import sys
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+    
+    t = int(input_data[0])
+    ptr = 1
+    
+    out = []
+    for _ in range(t):
+        n = int(input_data[ptr])
+        x = int(input_data[ptr+1])
+        s = int(input_data[ptr+2])
+        u = input_data[ptr+3]
+        ptr += 4
+        dp = [-1] * (x + 1)
+        dp[x] = 0 
+        
+        for char in u:
+            ndp = [-1] * (x + 1)
+            
+            for e in range(x + 1):
+                if dp[e] == -1:
+                    continue
+                
+                ans = dp[e]
+                fs = (x - e) * s - ans
+                
+                if char == 'I':
+                    if ans > ndp[e]:
+                        ndp[e] = ans
+                    if e > 0 and ans + 1 > ndp[e - 1]:
+                        ndp[e - 1] = ans + 1
+                        
+                elif char == 'E':
+                    if ans > ndp[e]:
+                        ndp[e] = ans
+                    if fs > 0 and ans + 1 > ndp[e]:
+                        ndp[e] = ans + 1
+                        
+                elif char == 'A':
+                    if ans > ndp[e]:
+                        ndp[e] = ans
+                    if fs > 0 and ans + 1 > ndp[e]:
+                        ndp[e] = ans + 1
+                    if e > 0 and ans + 1 > ndp[e - 1]:
+                        ndp[e - 1] = ans + 1
+            
+            dp = ndp
+            
+        out.append(str(max(dp)))
+        
+    print('\n'.join(out))
+
+if __name__ == "__main__":
+    solve()

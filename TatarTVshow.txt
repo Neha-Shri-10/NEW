@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_N 200005
+char s[MAX_N];
+
+void solve() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+    scanf("%s", s);
+
+    // Greedy sweep from 0 to n - k - 1 (0-indexed translation of 1 <= i <= n - k)
+    for (int i = 0; i < n - k; i++) {
+        if (s[i] == '1') {
+            s[i] = '0'; // Flip current position
+            
+            // Flip the paired element at position i + k
+            if (s[i + k] == '0') {
+                s[i + k] = '1';
+            } else {
+                s[i + k] = '0';
+            }
+        }
+    }
+
+    // Final integrity scan: if any '1' remains, the puzzle is impossible
+    int possible = 1;
+    for (int i = 0; i < n; i++) {
+        if (s[i] == '1') {
+            possible = 0;
+            break;
+        }
+    }
+
+    if (possible) {
+        printf("YES\n");
+    } else {
+        printf("NO\n");
+    }
+}
+
+int main() {
+    int t;
+    if (scanf("%d", &t) == 1) {
+        while (t--) {
+            solve();
+        }
+    }
+    return 0;
+}
