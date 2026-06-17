@@ -1,0 +1,32 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <ctype.h>
+int main() {
+    char n[50];
+    int i,sum=0,t;
+    printf("Enter a number:");
+    scanf("%s",n);
+    for(i=0;i<strlen(n);i++){
+    if(!isdigit(n[i])){
+        printf("Invalid Input.");
+    }
+    }
+    int l=strlen(n);
+    if(l!=4){
+        printf("Length must be 4.");
+    }
+    int d = atoi(n);
+    int temp=d;
+    while(temp>0){
+        t=temp%10;
+        sum+=t;
+        temp/=10;
+    }
+    if(sum%3==0 || sum%5==0 || sum%7 ==0){
+        printf("Lucky number.");
+    } 
+    else{
+        printf("Not Lucky number.");
+    }
+}
