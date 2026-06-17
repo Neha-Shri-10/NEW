@@ -1,0 +1,70 @@
+import os
+
+class FileZipperRLE:
+    @staticmethod
+    def compress(input_path: str, output_path: str) -> None:
+        """Compresses a file using Run-Length Encoding."""
+        if not os.path.exists(input_path):
+            print(f"Error: {input_path} does not exist.")
+            return
+
+        with open(input_path, 'r', encoding='utf-8') as f:
+            data = f.read()
+
+        if not data:
+            with open(output_path, 'w', encoding='utf-8') as f:
+                f.write("")
+            return
+
+        compressed = []
+        i = 0
+        while i < len(data):
+            count = 1
+           
+            while i + 1 < len(data) and data[i] == data[i + 1]:
+                count += 1
+                i += 1
+            
+
+            compressed.append(f"{data[i]}{count}")
+            i += 1
+
+        with open(output_path, 'w', encoding='utf-8') as f:
+            f.write("".join(compressed))
+        
+        print(f"Compression complete! Saved to {output_path}")
+
+    @staticmethod
+    def decompress(input_path: str, output_path: str) -> None:
+        if not os.path.exists(input_path):
+            print(f"Error: {input_path} does not exist.")
+            return
+
+        with open(input_path, 'r', encoding='utf-8') as f:
+            data = f.read()
+
+        decompressed = []
+        i = 0
+        while i < len(data):
+            char = data[i]
+            i += 1
+                        count_str = ""
+            while i < len(data) and data[i].isdigit():
+                count_str += data[i]
+                i += 1
+            
+            if count_str:
+                decompressed.append(char * int(count_str))
+
+        with open(output_path, 'w', encoding='utf-8') as f:
+            f.write("".join(decompressed))
+            
+        print(f"Decompression complete! Saved to {output_path}")
+
+if __name__ == "__main__":
+   
+    with open("sample.txt", "w") as f:
+        f.write("AAAAABBBBBBBCCCCDD" * 100)
+    FileZipperRLE.compress("sample.txt", "compressed.rle")
+    
+    FileZipperRLE.decompress("compressed.rle", "restored.txt")
