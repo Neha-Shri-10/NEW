@@ -1,0 +1,16 @@
+int* twoSum(int* arr, int n, int tar, int* retsize) {
+    int *res=(int*)malloc(2*sizeof(int));
+    *retsize=2;
+    int i,j;
+    for(i=0;i<n;i++){
+        for(j=i+1;j<n;j++){
+            if(arr[i]+arr[j]==tar){
+                res[0]=i;
+                res[1]=j;
+                return res;
+            }
+        }
+    }
+    *retsize=0;
+    return NULL;
+    }
